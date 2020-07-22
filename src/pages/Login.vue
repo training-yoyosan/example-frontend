@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <q-banner class="text-center bg-primary q-ma-md">
+    <q-banner class="text-center bg-primary q-ma-md text-white">
       Please login to gain access to the application.
     </q-banner>
     <q-form
@@ -44,7 +44,7 @@ export default {
   data () {
     return {
       formData: {
-        email: 'contact@example.local',
+        email: 'admin@example.local',
         password: 'test1234'
       }
     }

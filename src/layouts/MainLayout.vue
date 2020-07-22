@@ -52,10 +52,10 @@
         </q-select>
 
         <div v-if="$q.screen.gt.sm" class="GL__toolbar-link q-ml-xs q-gutter-md text-body2 text-weight-bold row items-center no-wrap">
-          <a href="javascript:void(0)" class="text-white">
+          <a v-if="loggedIn" href="javascript:void(0)" class="text-white">
             Pull requests
           </a>
-          <a href="javascript:void(0)" class="text-white">
+          <a v-if="loggedIn" href="javascript:void(0)" class="text-white">
             Issues
           </a>
           <a href="javascript:void(0)" class="text-white">
@@ -68,7 +68,14 @@
 
         <q-space />
 
-        <div class="q-pl-sm q-gutter-sm row items-center no-wrap">
+        <q-btn
+          v-if="!loggedIn"
+          to="/login"
+          flat
+          icon-right="account_circle"
+        />
+
+        <div v-else class="q-pl-sm q-gutter-sm row items-center no-wrap">
           <q-btn v-if="$q.screen.gt.xs" dense flat round size="sm" icon="notifications" />
           <q-btn v-if="$q.screen.gt.xs" dense flat>
             <div class="row items-center no-wrap">
@@ -99,8 +106,8 @@
           </q-btn>
 
           <q-btn dense flat no-wrap>
-            <q-avatar rounded size="20px">
-              <img src="https://cdn.quasar.dev/img/avatar3.jpg">
+            <q-avatar rounded size="2em">
+              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
             <q-icon name="arrow_drop_down" size="16px" />
 
@@ -108,7 +115,7 @@
               <q-list dense>
                 <q-item class="GL__menu-link-signed-in">
                   <q-item-section>
-                    <div>Signed in as <strong>Mary</strong></div>
+                    <div>Signed in as <strong>{{ details.name }}</strong></div>
                   </q-item-section>
                 </q-item>
                 <q-separator />
@@ -144,7 +151,7 @@
                   <q-item-section>Settings</q-item-section>
                 </q-item>
                 <q-item clickable class="GL__menu-link">
-                  <q-item-section>Sign out</q-item-section>
+                  <q-item-section @click="logout">Sign out</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -160,13 +167,17 @@
 </template>
 
 <script>
+
 import { fabGithub } from '@quasar/extras/fontawesome-v5'
+import { mapState, mapActions } from 'vuex'
+
 const stringOptions = [
   'quasarframework/quasar',
   'quasarframework/quasar-awesome'
 ]
 export default {
   name: 'MyLayout',
+
   data () {
     return {
       text: '',
@@ -174,7 +185,14 @@ export default {
       filteredOptions: []
     }
   },
+
+  computed: {
+    ...mapState('user', ['loggedIn', 'details'])
+  },
+
   methods: {
+    ...mapActions('user', ['logout']),
+
     filter (val, update) {
       if (this.options === null) {
         // load data
@@ -208,6 +226,7 @@ export default {
       })
     }
   },
+
   created () {
     this.fabGithub = fabGithub
   }

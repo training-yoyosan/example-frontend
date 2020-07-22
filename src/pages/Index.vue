@@ -1,9 +1,8 @@
 <template>
   <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-full.svg"
-    >
+    <q-banner class="bg-positive">
+      Yay! You're logged in!
+    </q-banner>
   </q-page>
 </template>
 
