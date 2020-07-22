@@ -6,6 +6,8 @@
   "author": "Yoyo San <veselu@gmail.com>",
   "private": true,
   "scripts": {
+    "dev": "QENV=development quasar dev",
+    "build": "QENV=production quasar build",
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },
