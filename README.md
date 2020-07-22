@@ -8,11 +8,13 @@ Example SPA frontend to be used with a Laravel 7+ project.
 yarn
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+## Start the app in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
 quasar dev
 ```
+
+## Almost there
 
 Next set up the Laravel project(acting as an API) from [here](https://github.com/training-yoyosan/example-backend).
 
