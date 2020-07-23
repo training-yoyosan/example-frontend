@@ -55,3 +55,7 @@ cp .htaccess dist/spa
 ```
 
 Deploy on your server.
+
+## Demo
+
+Check out the live demo at http://frex.mpalade.ro
