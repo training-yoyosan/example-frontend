@@ -2,6 +2,10 @@
 
 Example SPA frontend to be used with a Laravel 7+ project.
 
+## Demo
+
+Check out the live demo at http://frex.mpalade.ro
+
 ## Local setup
 
 ### Install the dependencies
@@ -55,7 +59,3 @@ cp .htaccess dist/spa
 ```
 
 Deploy on your server.
-
-## Demo
-
-Check out the live demo at http://frex.mpalade.ro
