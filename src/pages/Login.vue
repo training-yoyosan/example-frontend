@@ -49,6 +49,7 @@ export default {
       }
     }
   },
+
   methods: {
     ...mapActions('user', ['login']),
     onSubmit () {
