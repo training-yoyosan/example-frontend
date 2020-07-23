@@ -12,11 +12,14 @@ yarn
 
 ### Start the app in development mode
 
-**Note**: This setup is using a [proxy configuration](https://github.com/training-yoyosan/example-frontend/blob/master/quasar.conf.js#L72) for the `devServer` definition in `quasar.conf.js`. Only needed for local development.
-
 ```bash
 quasar dev
 ```
+
+**Notes**
+
+- This setup is using a [proxy configuration](https://github.com/training-yoyosan/example-frontend/blob/master/quasar.conf.js#L76) for the `devServer` definition in `quasar.conf.js`. Only needed for local development.
+- Use `admin@example.local` with password `test1234` to login.
 
 ### Almost there
 
