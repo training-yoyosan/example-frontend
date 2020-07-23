@@ -44,6 +44,9 @@ vim .quasar.env.json
 
 ```bash
 yarn run build
+# or
+QENV=production quasar build
+
 # Adjust your server configuration according to
 # https://router.vuejs.org/guide/essentials/history-mode.html#example-server-configurations
 
