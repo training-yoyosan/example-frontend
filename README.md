@@ -6,6 +6,8 @@ Example SPA frontend to be used with a Laravel 7+ project.
 
 Check out the live demo at http://frex.mpalade.ro
 
+Use `admin@example.local` and password `test1234` to login.
+
 ## Local setup
 
 ### Install the dependencies
