@@ -44,6 +44,11 @@ vim .quasar.env.json
 
 ```bash
 yarn run build
+# Adjust your server configuration according to
+# https://router.vuejs.org/guide/essentials/history-mode.html#example-server-configurations
+
+# For Apache(optional)
+cp .htaccess dist/spa
 ```
 
 Deploy on your server.
