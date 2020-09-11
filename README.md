@@ -61,3 +61,5 @@ cp .htaccess dist/spa
 ```
 
 Deploy on your server.
+
+**Note**: If you use HTTPS, use the protocol in your `.quasar.env.json` file.
