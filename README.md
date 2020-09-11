@@ -1,6 +1,6 @@
 # Example Frontend (example-frontend)
 
-Example SPA frontend to be used with a Laravel 7+ project.
+Example SPA frontend to be used with a Laravel 8 project.
 
 ## Demo
 
