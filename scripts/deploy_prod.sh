@@ -2,6 +2,6 @@
 
 git pull
 yarn
-quasar build
+yarn run build
 chown -R mpalade:mpalade .
 chmod -R u+rwX,go+rX,go-w .
