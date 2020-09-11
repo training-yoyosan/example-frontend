@@ -1,0 +1,17 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build prod",
+      "type": "shell",
+      "command": "ssh -p31222 root@mpalade.ro 'cd /home/mpalade/sites/example-frontend && sh scripts/deploy_prod.sh'; New-BurntToastNotification -Text 'Deployed `example-frontend` on prod'",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
