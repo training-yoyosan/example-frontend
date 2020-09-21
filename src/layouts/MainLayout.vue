@@ -43,9 +43,9 @@
               </q-item-section>
             </q-item>
 
-            <q-item v-if="isAdmin" to="/help" exact clickable v-ripple>
+            <q-item v-if="isAdmin" to="/adminboard" exact clickable v-ripple >
               <q-item-section avatar>
-                <q-icon name="help" />
+                <q-icon name="people" />
               </q-item-section>
 
               <q-item-section>
@@ -96,7 +96,6 @@
 
 <script>
 import { date } from 'quasar'
-import { fabGithub } from '@quasar/extras/fontawesome-v5'
 import { mapState, mapActions } from 'vuex'
 
 const stringOptions = [
@@ -121,7 +120,7 @@ export default {
 
   methods: {
     ...mapActions('user', ['logout', 'test']),
-
+    
    
   },
 }

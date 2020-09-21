@@ -23,11 +23,27 @@ function login({ commit }, payload) {
           axios
             .get("/api/user")
             .then(response => {
+              
               commit("setDetails", response.data);
               commit("setIsAdmin", response.data.is_admin);
 
-              showSuccessNotification("You've been authenticated!");
+              const username = response.data.name;
 
+              console.log(username);
+
+              axios.post("/api/getusers", {
+                name: username
+              })
+              .then(response => {
+                commit("setUsersData", response.body);
+                showSuccessNotification("Users list loaded!");
+                console.log(response.body);
+              })
+              .catch(() => {
+                showErrorNotification("Users list couldn't be loaded!");
+              });
+
+              showSuccessNotification("You've been authenticated!");
               this.$router.push("/");
             })
             .catch(() => {
@@ -101,14 +117,31 @@ function register({ commit }, payload) {
     });
 }
 
+function getUsersData({ commit }, payload){
+  Loading.show();
+
+  axios.post("/api/getusers", {
+    name: payload.name
+  })
+  .then(response => {
+    commit("setUsersData", response.data);
+    showSuccessNotification("Users list loaded!");
+  })
+  .catch(() => {
+    showErrorNotification("Users list couldn't be loaded!");
+  });
+}
+
 function getState({ commit }) {
   const loggedIn = LocalStorage.getItem("user.loggedIn") || false;
   const details = LocalStorage.getItem("user.details") || {};
   const isAdmin = LocalStorage.getItem("user.isAdmin") || false;
+  const usersData = LocalStorage.getItem("user.usersData") || {};
   
   commit("setLoggedIn", loggedIn);
   commit("setDetails", details);
   commit("setIsAdmin", isAdmin);
+  commit("setUsersData", usersData);
 }
 
-export { login, logout, test, register, getState };
+export { login, logout, test, register, getUsersData, getState };

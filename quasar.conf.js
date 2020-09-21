@@ -93,7 +93,9 @@ module.exports = function(/* ctx */) {
       // * 'auto' - (DEFAULT) Auto-import needed Quasar components & directives
       // * 'all'  - Manually specify what to import
       importStrategy: "auto",
-
+      components: [
+        'QTable'
+      ],
       // Quasar plugins
       plugins: ["LocalStorage", "Loading", "Notify"]
     },
