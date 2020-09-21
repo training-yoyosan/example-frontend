@@ -11,6 +11,7 @@ function login({ commit }, payload) {
   axios
     .get("/sanctum/csrf-cookie")
     .then(() => {
+      
       axios
         .post("/api/login", {
           email: payload.email,
@@ -18,11 +19,12 @@ function login({ commit }, payload) {
         })
         .then(() => {
           commit("setLoggedIn", true);
-
+          
           axios
             .get("/api/user")
             .then(response => {
               commit("setDetails", response.data);
+              commit("setIsAdmin", response.data.is_admin);
 
               showSuccessNotification("You've been authenticated!");
 
@@ -63,12 +65,50 @@ function logout({ commit }) {
     });
 }
 
+function test({ commit }) {
+  Loading.show();
+
+  axios
+    .post("/api/test")
+    .then(response => {
+      showSuccessNotification(response.data.message);
+    })
+    .catch(() => {
+      showErrorNotification("Test couldn't take place!");
+    });
+}
+
+function register({ commit }, payload) {
+  Loading.show();
+    
+  axios
+    .post("/api/registration", {
+      email: payload.email,
+      password: payload.password,
+      password_confirmation: payload.password_confirmation,
+      name: payload.name,
+      is_admin: payload.is_admin
+    })
+    .then(response => {
+      if(response.data.message === "success"){
+        showSuccessNotification(response.data.name + " has been registered");
+      }else{
+        showErrorNotification("Registration failed!");
+      }
+    })
+    .catch(() => {
+      showErrorNotification("Registration couldn't take place!");
+    });
+}
+
 function getState({ commit }) {
   const loggedIn = LocalStorage.getItem("user.loggedIn") || false;
   const details = LocalStorage.getItem("user.details") || {};
-
+  const isAdmin = LocalStorage.getItem("user.isAdmin") || false;
+  
   commit("setLoggedIn", loggedIn);
   commit("setDetails", details);
+  commit("setIsAdmin", isAdmin);
 }
 
-export { login, logout, getState };
+export { login, logout, test, register, getState };

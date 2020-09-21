@@ -15,4 +15,5 @@ export default {
     this.getState()
   }
 }
+// window.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 </script>

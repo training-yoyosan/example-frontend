@@ -4,11 +4,20 @@
       <q-card-section>
         <q-form
           @submit="onSubmit"
+          @reset="onReset"
           class="q-gutter-md"
         >
           <q-input
             filled
-            type="email"
+            v-model="formData.name"
+            label="Нэр *"
+            hint="Нэр ба овог"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || 'Нэр оруулна уу']"
+          />
+          <q-input
+            filled
+            type="text"
             v-model="formData.email"
             label="И-мейл *"
             lazy-rules
@@ -33,9 +42,19 @@
               />
             </template>
           </q-input>
+          <q-input
+            filled
+            :type="formData.isPwd ? 'password' : 'text'"
+            v-model="formData.password_confirmation"
+            label="Нууц үг баталгаажуулах *"
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || 'Баталгаажуулах нууц үг оруулна уу']"
+          />
+          <q-toggle v-model="formData.is_admin" label="Админ эрхтэй эсэх" />
           <div>
-            <q-btn label="Нэвтрэх" type="submit" color="primary"/>
-            <q-btn label="Бүртгүүлэх" to="/register" color="primary" flat class="q-ml-sm" />
+            <q-btn label="Бүртгүүлэх" type="submit" color="primary"/>
+            <q-btn label="Цэвэрлэх" type="reset" color="primary" flat class="q-ml-sm" />
+            <q-btn label="Нэвтрэх" to="/login" color="primary" flat class="q-ml-sm" />
           </div>
         </q-form>
       </q-card-section>
@@ -44,25 +63,34 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   data () {
     return {
       formData: {
-        email: 'admin@example.local',
-        password: 'test1234',
-        isPwd: true
+        name: null,
+        email: null,
+        password: null,
+        password_confirmation: null,
+        isPwd: true,
+        is_admin: false
       }
     }
   },
 
   methods: {
-    ...mapActions('user', ['login']),
+    ...mapActions('user', ['register']),
     onSubmit () {
-      this.login(this.formData)
+      this.register(this.formData)
+    },
+    onReset () {
+      this.formData.name = null
+      this.formData.email = null
+      this.formData.password = null
+      this.formData.password_confirmation = null
+      this.formData.is_admin = false
     }
   }
 }

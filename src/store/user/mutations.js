@@ -12,4 +12,11 @@ function setDetails(state, payload) {
   LocalStorage.set("user.details", payload);
 }
 
-export { setLoggedIn, setDetails };
+function setIsAdmin(state, value) {
+  state.isAdmin = value;
+
+  LocalStorage.set("user.isAdmin", value);
+}
+
+export { setLoggedIn, setDetails, setIsAdmin };
+

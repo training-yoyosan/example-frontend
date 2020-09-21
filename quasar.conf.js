@@ -76,7 +76,7 @@ module.exports = function(/* ctx */) {
       proxy: [
         {
           context: ["/sanctum", "/api"],
-          target: "http://example.local/",
+          target: "http://127.0.0.1:8000",
           changeOrigin: true,
           cookieDomainRewrite: "localhost"
         }
