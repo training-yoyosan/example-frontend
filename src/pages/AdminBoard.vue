@@ -61,13 +61,7 @@ export default {
         },
       ],
       data: [
-        {
-          name: 'example',
-          email: 'example@email.com',
-          is_admin: true,
-          created_it: Date.now(),
-          id: 25
-        },
+        
       ]
     }
   },
@@ -75,7 +69,7 @@ export default {
     ...mapState('user', ['loggedIn', 'details', 'isAdmin', 'usersData']),
   },
   methods: {
-    ...mapActions('user'),
+    ...mapActions('user', ['setUsersData']),
   }
 }
 </script>

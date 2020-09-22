@@ -5,6 +5,8 @@ import {
 } from "../../functions/function-show-notifications";
 import axios from "axios";
 
+//Login
+
 function login({ commit }, payload) {
   Loading.show();
 
@@ -27,17 +29,17 @@ function login({ commit }, payload) {
               commit("setDetails", response.data);
               commit("setIsAdmin", response.data.is_admin);
 
-              const username = response.data.name;
-
-              console.log(username);
+              const userid = response.data.id;
+              console.log(userid);
 
               axios.post("/api/getusers", {
-                name: username
+                id: userid
               })
               .then(response => {
-                commit("setUsersData", response.body);
+                
+                commit("setUsersData", response.data[0]);
                 showSuccessNotification("Users list loaded!");
-                console.log(response.body);
+                console.log(response.data[0]);
               })
               .catch(() => {
                 showErrorNotification("Users list couldn't be loaded!");
@@ -61,6 +63,8 @@ function login({ commit }, payload) {
     });
 }
 
+//Logout
+
 function logout({ commit }) {
   const reset = () => {
     commit("setLoggedIn", false);
@@ -81,6 +85,8 @@ function logout({ commit }) {
     });
 }
 
+//Server API Test
+
 function test({ commit }) {
   Loading.show();
 
@@ -93,6 +99,8 @@ function test({ commit }) {
       showErrorNotification("Test couldn't take place!");
     });
 }
+
+//Register
 
 function register({ commit }, payload) {
   Loading.show();
@@ -117,6 +125,8 @@ function register({ commit }, payload) {
     });
 }
 
+//Get list of users except logged user
+
 function getUsersData({ commit }, payload){
   Loading.show();
 
@@ -131,6 +141,8 @@ function getUsersData({ commit }, payload){
     showErrorNotification("Users list couldn't be loaded!");
   });
 }
+
+//Localstorage values
 
 function getState({ commit }) {
   const loggedIn = LocalStorage.getItem("user.loggedIn") || false;

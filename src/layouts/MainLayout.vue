@@ -82,8 +82,28 @@
             </q-avatar>
             <div class="avatar-box text-weight-bold">{{ details.name }}</div>
             <div class="avatar-box">{{ details.email }}</div>
+            <q-btn label="Профил" color="primary" @click="profile = true" />
           </div>
         </q-img>
+
+        <q-dialog v-model="profile" persistent>
+          <q-card>
+            <q-bar>
+              <q-icon name="person" />
+              <div>Профил Засах - {{ details.name }}</div>
+
+              <q-space />
+
+              <q-btn dense flat icon="close" v-close-popup>
+                <q-tooltip>Close</q-tooltip>
+              </q-btn>
+            </q-bar>
+            <q-card-section>
+              <Profile/>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
+
       </q-drawer>
 
     <q-page-container>
@@ -97,17 +117,19 @@
 <script>
 import { date } from 'quasar'
 import { mapState, mapActions } from 'vuex'
+import Profile from 'components/Profile.vue'
 
 const stringOptions = [
   'quasarframework/quasar',
   'quasarframework/quasar-awesome'
 ]
 export default {
-  name: 'MyLayout',
-
+  name: 'MainLayout',
+  components: { Profile },
   data () {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
+      profile: false
     }
   },
 
@@ -132,8 +154,5 @@ export default {
     z-index: -1;
     opacity: 0.5;
     filter: grayscale(100%);
-  }
-  .avatar-box {
-    color: rgb(0, 0, 0);
   }
 </style>
