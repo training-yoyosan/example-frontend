@@ -18,6 +18,10 @@ const routes = [
       {
         path: "/adminboard",
         component: () => import("pages/AdminBoard.vue")
+      },
+      {
+        path: "/profile",
+        component: () => import("pages/Profile.vue")
       }
     ]
   },

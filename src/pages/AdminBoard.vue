@@ -3,11 +3,13 @@
     <div class="q-pa-md">
       <q-table
         title="Хэрэглэгчид"
-        :data="data"
+        :data="[].concat(tableData, usersData)"
         :columns="columns"
         row-key="name"
       >
       </q-table>
+      <p>{{ tableData }}</p>
+      <p>{{ usersData }}</p>
     </div>
   </q-page>
 </template>
@@ -58,18 +60,28 @@ export default {
           align: 'center',
           field: row => row.id,
           sortable: true
-        },
+        }
       ],
-      data: [
-        
+      tableData: [
+        {
+          name: 'nick',
+          email: 'nick@example.com',
+          is_admin: true,
+          created_at: date.formatDate(Date.now()),
+          id: 69
+        },
+        {
+          name: 'roger',
+          email: 'roger@example.com',
+          is_admin: true,
+          created_at: date.formatDate(Date.now()),
+          id: 70
+        },
       ]
     }
   },
   computed: {
     ...mapState('user', ['loggedIn', 'details', 'isAdmin', 'usersData']),
-  },
-  methods: {
-    ...mapActions('user', ['setUsersData']),
   }
 }
 </script>

@@ -23,4 +23,13 @@ function showSuccessNotification(message) {
   });
 }
 
-export { showErrorNotification, showSuccessNotification };
+function makeTableData(jsonResponse) {
+  const length = jsonResponse.length;
+  const data = new Object();
+  for (let index = 0; index < length; index++) {
+    data[index] = jsonResponse[index];
+  }
+  return data;
+}
+
+export { showErrorNotification, showSuccessNotification, makeTableData };

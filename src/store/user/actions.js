@@ -1,7 +1,8 @@
 import { Loading, LocalStorage } from "quasar";
 import {
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
+  makeTableData
 } from "../../functions/function-show-notifications";
 import axios from "axios";
 
@@ -30,36 +31,36 @@ function login({ commit }, payload) {
               commit("setIsAdmin", response.data.is_admin);
 
               const userid = response.data.id;
-              console.log(userid);
 
               axios.post("/api/getusers", {
                 id: userid
               })
               .then(response => {
                 
-                commit("setUsersData", response.data[0]);
-                showSuccessNotification("Users list loaded!");
-                console.log(response.data[0]);
+                commit("setUsersData", JSON.stringify(response.data[0]));
+                showSuccessNotification("Хэрэглэгчдийн нэрс жагсаагдав!");
+                console.log(JSON.stringify(response.data[0]));
               })
               .catch(() => {
-                showErrorNotification("Users list couldn't be loaded!");
+                showErrorNotification("Хэрэглэгчдийн нэрс жагсаах хүсэлт очсонгүй!");
               });
 
-              showSuccessNotification("You've been authenticated!");
+
+              showSuccessNotification("Та нэвтэрлээ.");
               this.$router.push("/");
             })
             .catch(() => {
-              showErrorNotification("You're not authenticated!");
+              showErrorNotification("Таны нэвтрэлт амжилтгүй болов!");
 
               commit("setLoggedIn", false);
             });
         })
         .catch(() => {
-          showErrorNotification("Authentication couldn't take place!");
+          showErrorNotification("Таны нэвтрэлт зөвшөөрөгдсөнгүй!");
         });
     })
     .catch(() => {
-      showErrorNotification("Authentication couldn't take place!");
+      showErrorNotification("Таны нэвтрэлт зөвшөөрөгдсөнгүй!");
     });
 }
 
@@ -76,11 +77,11 @@ function logout({ commit }) {
   axios
     .post("/api/logout")
     .then(() => {
-      showSuccessNotification("You've been logged out!");
+      showSuccessNotification("Амжилттай гарлаа!");
       reset();
     })
     .catch(() => {
-      showErrorNotification("Session expired!");
+      showErrorNotification("Нэвтрэх хугацаа дууслаа!");
       reset();
     });
 }
@@ -96,7 +97,7 @@ function test({ commit }) {
       showSuccessNotification(response.data.message);
     })
     .catch(() => {
-      showErrorNotification("Test couldn't take place!");
+      showErrorNotification("Тест үйлдэл зөвшөөрөгдсөнгүй");
     });
 }
 
@@ -115,13 +116,51 @@ function register({ commit }, payload) {
     })
     .then(response => {
       if(response.data.message === "success"){
-        showSuccessNotification(response.data.name + " has been registered");
+        showSuccessNotification(response.data.name + " нэртэй хэрэглэгч бүртгэгдэв.");
       }else{
-        showErrorNotification("Registration failed!");
+        showErrorNotification("Бүртгэлт амжилтгүй болов.");
       }
     })
     .catch(() => {
-      showErrorNotification("Registration couldn't take place!");
+      showErrorNotification("Бүртгэлт зөвшөөрөгдсөнгүй.");
+    });
+}
+
+//Profile update
+
+function profiledit({ commit }, payload) {
+  Loading.show();
+    
+  axios
+    .put("/api/profiledit", {
+      id: payload.id,
+      name: payload.name,
+      email: payload.email,
+      password: payload.password,
+      password_confirmation: payload.password_confirmation,
+    })
+    .then(response => {
+      if(response.data.message === "success"){
+        showSuccessNotification(response.data.name + " нэртэй хэрэглэгчийн мэдээлэл засагдлаа.");
+
+        axios
+            .get("/api/user")
+            .then(response => {
+              
+              commit("setDetails", response.data);
+
+              showSuccessNotification("Та нэвтэрлээ");
+              this.$router.push("/profile");
+            })
+            .catch(() => {
+              showErrorNotification("Таны нэвтрэлт амжилтгүй болов!");
+            });
+      }else{
+        showErrorNotification("Профил засалт амжилтгүй болов!");
+      }
+    })
+    .catch(() => {
+      showErrorNotification("Профил засалт зөвшөөрөгдсөнгүй!");
     });
 }
 
@@ -131,14 +170,16 @@ function getUsersData({ commit }, payload){
   Loading.show();
 
   axios.post("/api/getusers", {
-    name: payload.name
+    id: payload.id
   })
   .then(response => {
-    commit("setUsersData", response.data);
-    showSuccessNotification("Users list loaded!");
+    
+    commit("setUsersData", JSON.stringify(response.data));
+    showSuccessNotification("Хэрэглэгчдийн нэрс жагсаагдав!");
+    console.log(JSON.stringify(response.data));
   })
   .catch(() => {
-    showErrorNotification("Users list couldn't be loaded!");
+    showErrorNotification("Хэрэглэгчдийн нэрс жагсаах хүсэлт очсонгүй!");
   });
 }
 
@@ -156,4 +197,4 @@ function getState({ commit }) {
   commit("setUsersData", usersData);
 }
 
-export { login, logout, test, register, getUsersData, getState };
+export { login, logout, test, register, getUsersData, profiledit, getState };

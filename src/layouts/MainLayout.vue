@@ -33,13 +33,13 @@
       >
         <q-scroll-area style="height: calc(100% - 192px); margin-top: 192px; border-right: 1px solid #ddd">
           <q-list padding>
-            <q-item to="/" exact clickable v-ripple>
+            <q-item to="/profile" exact clickable v-ripple>
               <q-item-section avatar>
-                <q-icon name="train" />
+                <q-icon name="person" />
               </q-item-section>
 
               <q-item-section>
-                Transport
+                Профил
               </q-item-section>
             </q-item>
 
@@ -49,7 +49,7 @@
               </q-item-section>
 
               <q-item-section>
-                Adminboard
+                Админы самбар
               </q-item-section>
             </q-item>
 
@@ -59,7 +59,7 @@
               </q-item-section>
 
               <q-item-section>
-                Test Button
+                Тест үйлдэл
               </q-item-section>
             </q-item>
 
@@ -69,7 +69,7 @@
               </q-item-section>
 
               <q-item-section>
-                Logout
+                Гарах
               </q-item-section>
             </q-item>
           </q-list>
@@ -82,27 +82,8 @@
             </q-avatar>
             <div class="avatar-box text-weight-bold">{{ details.name }}</div>
             <div class="avatar-box">{{ details.email }}</div>
-            <q-btn label="Профил" color="primary" @click="profile = true" />
           </div>
         </q-img>
-
-        <q-dialog v-model="profile" persistent>
-          <q-card>
-            <q-bar>
-              <q-icon name="person" />
-              <div>Профил Засах - {{ details.name }}</div>
-
-              <q-space />
-
-              <q-btn dense flat icon="close" v-close-popup>
-                <q-tooltip>Close</q-tooltip>
-              </q-btn>
-            </q-bar>
-            <q-card-section>
-              <Profile/>
-            </q-card-section>
-          </q-card>
-        </q-dialog>
 
       </q-drawer>
 
@@ -117,7 +98,6 @@
 <script>
 import { date } from 'quasar'
 import { mapState, mapActions } from 'vuex'
-import Profile from 'components/Profile.vue'
 
 const stringOptions = [
   'quasarframework/quasar',
@@ -125,7 +105,6 @@ const stringOptions = [
 ]
 export default {
   name: 'MainLayout',
-  components: { Profile },
   data () {
     return {
       leftDrawerOpen: false,
