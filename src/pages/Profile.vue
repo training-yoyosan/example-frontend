@@ -100,13 +100,13 @@
             <q-toggle v-model="profileFormData.accept" label="Мэдээлэл засахдаа итгэлтэй байна." />
 
             <div>
-              <q-btn label="Засах" type="submit" color="primary"/>
-              <q-btn label="Цэвэрлэх" type="reset" color="primary" flat class="q-ml-sm" />
-              <q-btn label="Хаах" @click="data.showEdit = false" color="primary" flat class="q-ml-sm" />
+              <q-btn label="Засах" type="submit" color="warning"/>
+              <q-btn label="Цэвэрлэх" type="reset" color="warning" flat class="q-ml-sm" />
+              <q-btn label="Хаах" @click="data.showEdit = false" color="warning" flat class="q-ml-sm" />
             </div>
           </q-form>
         </div>
-        <q-btn v-else color="primary" label="Засах" @click="data.showEdit = true" />
+        <q-btn v-else color="warning" label="Засах" @click="data.showEdit = true" />
       </q-card-section>
     </q-card>
     

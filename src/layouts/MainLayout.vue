@@ -26,8 +26,7 @@
 
       <q-drawer
         v-if="loggedIn"
-        v-model="left
-        "
+        v-model="left"
         show-if-above
         :width="250"
         :breakpoint="600"
