@@ -2,7 +2,7 @@
   "name": "example-frontend",
   "version": "0.0.1",
   "description": "Example SPA frontend to be used with a Laravel 7+ project.",
-  "productName": "Example Frontend",
+  "productName": "IFFC Test",
   "author": "Yoyo San <veselu@gmail.com>",
   "private": true,
   "scripts": {

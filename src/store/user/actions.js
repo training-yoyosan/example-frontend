@@ -21,30 +21,32 @@ function login({ commit }, payload) {
           password: payload.password
         })
         .then(() => {
-          commit("setLoggedIn", true);
+          commit("setLoggedIn", true)
           
           axios
             .get("/api/user")
             .then(response => {
               
-              commit("setDetails", response.data);
-              commit("setIsAdmin", response.data.is_admin);
+              commit("setDetails", response.data)
+              commit("setIsAdmin", response.data.is_admin)
 
-              showSuccessNotification("Та нэвтэрлээ.");
+              // this.updateUsersData(response.data.id)
+
+              showSuccessNotification("Та нэвтэрлээ.")
               this.$router.push("/");
             })
             .catch(() => {
-              showErrorNotification("Таны нэвтрэлт амжилтгүй болов!");
+              showErrorNotification("Таны нэвтрэлт амжилтгүй болов!")
 
-              commit("setLoggedIn", false);
+              commit("setLoggedIn", false)
             });
         })
         .catch(() => {
-          showErrorNotification("Таны нэвтрэлт зөвшөөрөгдсөнгүй!");
-        });
+          showErrorNotification("Таны нэвтрэлт зөвшөөрөгдсөнгүй!")
+        })
     })
     .catch(() => {
-      showErrorNotification("Таны нэвтрэлт зөвшөөрөгдсөнгүй!");
+      showErrorNotification("Таны нэвтрэлт зөвшөөрөгдсөнгүй!")
     });
 }
 
@@ -52,20 +54,20 @@ function login({ commit }, payload) {
 
 function logout({ commit }) {
   const reset = () => {
-    commit("setLoggedIn", false);
-    this.$router.replace("/login");
+    commit("setLoggedIn", false)
+    this.$router.replace("/login")
   };
 
-  Loading.show();
+  Loading.show()
 
   axios
     .post("/api/logout")
     .then(() => {
-      showInfoNotification("Амжилттай гарлаа!");
+      showInfoNotification("Амжилттай гарлаа!")
       reset();
     })
     .catch(() => {
-      showErrorNotification("Нэвтрэх хугацаа дууслаа!");
+      showErrorNotification("Нэвтрэх хугацаа дууслаа!")
       reset();
     });
 }
@@ -78,11 +80,11 @@ function test({ commit }) {
   axios
     .post("/api/test")
     .then(response => {
-      showSuccessNotification(response.data.message);
+      showSuccessNotification(response.data.message)
     })
     .catch(() => {
-      showErrorNotification("Тест үйлдэл зөвшөөрөгдсөнгүй");
-    });
+      showErrorNotification("Тест үйлдэл зөвшөөрөгдсөнгүй")
+    })
 }
 
 //Register
@@ -100,13 +102,13 @@ function register({ commit }, payload) {
     })
     .then(response => {
       if(response.data.message === "success"){
-        showSuccessNotification(response.data.name + " нэртэй хэрэглэгч бүртгэгдэв.");
+        showSuccessNotification(response.data.name + " нэртэй хэрэглэгч бүртгэгдэв.")
       }else{
-        showErrorNotification("Бүртгэлт амжилтгүй болов.");
+        showErrorNotification("Бүртгэлт амжилтгүй болов.")
       }
     })
     .catch(() => {
-      showErrorNotification("Бүртгэлт зөвшөөрөгдсөнгүй.");
+      showErrorNotification("Бүртгэлт зөвшөөрөгдсөнгүй.")
     });
 }
 
@@ -125,41 +127,59 @@ function profiledit({ commit }, payload) {
     })
     .then(response => {
       if(response.data.message === "success"){
-        showSuccessNotification(response.data.name + " нэртэй хэрэглэгчийн мэдээлэл засагдлаа.");
+        showSuccessNotification(response.data.name + " нэртэй хэрэглэгчийн мэдээлэл засагдлаа.")
 
         axios
             .get("/api/user")
             .then(response => {
               
-              commit("setDetails", response.data);
+              commit("setDetails", response.data)
 
-              showSuccessNotification("Та нэвтэрлээ");
-              this.$router.push("/profile");
+              showSuccessNotification("Та нэвтэрлээ")
+              this.$router.push("/profile")
             })
             .catch(() => {
-              showErrorNotification("Таны нэвтрэлт амжилтгүй болов!");
+              showErrorNotification("Таны нэвтрэлт амжилтгүй болов!")
             });
       }else{
-        showErrorNotification("Профил засалт амжилтгүй болов!");
+        showErrorNotification("Профил засалт амжилтгүй болов!")
       }
     })
     .catch(() => {
-      showErrorNotification("Профил засалт зөвшөөрөгдсөнгүй!");
+      showErrorNotification("Профил засалт зөвшөөрөгдсөнгүй!")
+    });
+}
+
+// Updata adminboard
+
+function updateUsersData({ commit }, payload) {
+  axios
+    .post("/api/getusers", {
+      id: payload
+    })
+    .then(response => {
+      commit("setUsersData", response.data[0])
+      showInfoNotification("Хэрэглэгчдийн нэрс жагсаагдав!")
+      console.log(response.data[0])
+    })
+    .catch(() => {
+      showErrorNotification("Хэрэглэгчдийн нэрс жагсаах хүсэлт очсонгүй!")
     });
 }
 
 //Localstorage values
 
 function getState({ commit }) {
-  const loggedIn = LocalStorage.getItem("user.loggedIn") || false;
-  const details = LocalStorage.getItem("user.details") || {};
-  const isAdmin = LocalStorage.getItem("user.isAdmin") || false;
-  const usersData = LocalStorage.getItem("user.usersData") || [];
+  const loggedIn = LocalStorage.getItem("user.loggedIn") || false
+  const details = LocalStorage.getItem("user.details") || {}
+  const usersData = LocalStorage.getItem("user.usersData") || {}
+  const isAdmin = LocalStorage.getItem("user.isAdmin") || false
   
-  commit("setLoggedIn", loggedIn);
-  commit("setDetails", details);
-  commit("setIsAdmin", isAdmin);
-  commit("setUsersData", usersData);
+  commit("setLoggedIn", loggedIn)
+  commit("setDetails", details)
+  commit("setUsersData", usersData)
+  commit("setIsAdmin", isAdmin)
+
 }
 
-export { login, logout, test, register, profiledit, getState };
+export { login, logout, test, register, profiledit, getState, updateUsersData }

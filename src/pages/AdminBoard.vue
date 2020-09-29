@@ -3,7 +3,7 @@
     <div class="q-pa-md">
       <q-table
         title="Хэрэглэгчид"
-        :data="otherUsers"
+        :data="usersData"
         :columns="columns"
         row-key="name"
         :filter="filter"
@@ -148,28 +148,29 @@ export default {
           sortable: true
         }
       ],
-      otherUsers: []
     }
   },
   mounted() {
-    this.$axios.post("/api/getusers", {
-      id: this.details.id
-    })
-    .then(response => {
-      this.otherUsers = response.data[0]
-      showSuccessNotification("Хэрэглэгчдийн нэрс жагсаагдав!")
-    }) 
-    .catch(() => {
-      showErrorNotification("Хэрэглэгчдийн нэрс жагсаах хүсэлт очсонгүй!")
-    });
-    console.log(this.otherUsers)
+    // this.$axios.post("/api/getusers", {
+    //   id: this.details.id
+    // })
+    // .then(response => {
+    //   this.otherUsers = response.data[0]
+    //   showSuccessNotification("Хэрэглэгчдийн нэрс жагсаагдав!")
+    // }) 
+    // .catch(() => {
+    //   showErrorNotification("Хэрэглэгчдийн нэрс жагсаах хүсэлт очсонгүй!")
+    // });
+    // console.log(this.otherUsers)
+    this.updateUsersData(this.details.id)
   },
   methods: {
-    ...mapActions('user', ['register']),
+    ...mapActions('user', ['register', 'updateUsersData']),
     onSubmit () {
       this.register(this.formData)
       .then(
-        this.newUser = false
+        this.newUser = false,
+        this.updateUsersData(this.details.id)
       )
     },
     onReset () {
@@ -181,7 +182,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('user', ['loggedIn', 'details', 'isAdmin']),
+    ...mapState('user', ['loggedIn', 'details', 'isAdmin', 'usersData']),
   },
 }
 </script>

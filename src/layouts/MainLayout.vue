@@ -8,7 +8,7 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
+          @click="left = !left"
         />
 
         <!-- <q-toolbar-title>
@@ -26,7 +26,8 @@
 
       <q-drawer
         v-if="loggedIn"
-        v-model="leftDrawerOpen"
+        v-model="left
+        "
         show-if-above
         :width="250"
         :breakpoint="600"
@@ -107,7 +108,7 @@ export default {
   name: 'MainLayout',
   data () {
     return {
-      leftDrawerOpen: false,
+      left: false,
       profile: false
     }
   },

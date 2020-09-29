@@ -3,6 +3,7 @@ export default function() {
     loggedIn: false,
     isAdmin: false,
     permissions: [],
-    details: {}
+    details: {},
+    usersData: {}
   };
 }
