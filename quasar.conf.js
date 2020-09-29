@@ -114,8 +114,8 @@ module.exports = function(/* ctx */) {
       workboxPluginMode: "GenerateSW", // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: `Example Frontend`,
-        short_name: `Example Frontend`,
+        name: `IFFC Test`,
+        short_name: `IFFC`,
         description: `Example SPA frontend to be used with a Laravel 7+ project.`,
         display: "standalone",
         orientation: "portrait",

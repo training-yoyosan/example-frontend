@@ -2,7 +2,7 @@ import { Loading, LocalStorage } from "quasar";
 import {
   showErrorNotification,
   showSuccessNotification,
-  makeTableData
+  showInfoNotification
 } from "../../functions/function-show-notifications";
 import axios from "axios";
 
@@ -29,22 +29,6 @@ function login({ commit }, payload) {
               
               commit("setDetails", response.data);
               commit("setIsAdmin", response.data.is_admin);
-
-              const userid = response.data.id;
-
-              axios.post("/api/getusers", {
-                id: userid
-              })
-              .then(response => {
-                
-                commit("setUsersData", JSON.stringify(response.data[0]));
-                showSuccessNotification("Хэрэглэгчдийн нэрс жагсаагдав!");
-                console.log(JSON.stringify(response.data[0]));
-              })
-              .catch(() => {
-                showErrorNotification("Хэрэглэгчдийн нэрс жагсаах хүсэлт очсонгүй!");
-              });
-
 
               showSuccessNotification("Та нэвтэрлээ.");
               this.$router.push("/");
@@ -77,7 +61,7 @@ function logout({ commit }) {
   axios
     .post("/api/logout")
     .then(() => {
-      showSuccessNotification("Амжилттай гарлаа!");
+      showInfoNotification("Амжилттай гарлаа!");
       reset();
     })
     .catch(() => {
@@ -164,32 +148,13 @@ function profiledit({ commit }, payload) {
     });
 }
 
-//Get list of users except logged user
-
-function getUsersData({ commit }, payload){
-  Loading.show();
-
-  axios.post("/api/getusers", {
-    id: payload.id
-  })
-  .then(response => {
-    
-    commit("setUsersData", JSON.stringify(response.data));
-    showSuccessNotification("Хэрэглэгчдийн нэрс жагсаагдав!");
-    console.log(JSON.stringify(response.data));
-  })
-  .catch(() => {
-    showErrorNotification("Хэрэглэгчдийн нэрс жагсаах хүсэлт очсонгүй!");
-  });
-}
-
 //Localstorage values
 
 function getState({ commit }) {
   const loggedIn = LocalStorage.getItem("user.loggedIn") || false;
   const details = LocalStorage.getItem("user.details") || {};
   const isAdmin = LocalStorage.getItem("user.isAdmin") || false;
-  const usersData = LocalStorage.getItem("user.usersData") || {};
+  const usersData = LocalStorage.getItem("user.usersData") || [];
   
   commit("setLoggedIn", loggedIn);
   commit("setDetails", details);
@@ -197,4 +162,4 @@ function getState({ commit }) {
   commit("setUsersData", usersData);
 }
 
-export { login, logout, test, register, getUsersData, profiledit, getState };
+export { login, logout, test, register, profiledit, getState };

@@ -3,13 +3,11 @@
     <div class="q-pa-md">
       <q-table
         title="Хэрэглэгчид"
-        :data="[].concat(tableData, usersData)"
+        :data="otherUsers"
         :columns="columns"
         row-key="name"
       >
       </q-table>
-      <p>{{ tableData }}</p>
-      <p>{{ usersData }}</p>
     </div>
   </q-page>
 </template>
@@ -62,26 +60,24 @@ export default {
           sortable: true
         }
       ],
-      tableData: [
-        {
-          name: 'nick',
-          email: 'nick@example.com',
-          is_admin: true,
-          created_at: date.formatDate(Date.now()),
-          id: 69
-        },
-        {
-          name: 'roger',
-          email: 'roger@example.com',
-          is_admin: true,
-          created_at: date.formatDate(Date.now()),
-          id: 70
-        },
-      ]
+      otherUsers: []
     }
   },
+  mounted() {
+    this.$axios.post("/api/getusers", {
+      id: this.details.id
+    })
+    .then(response => {
+      this.otherUsers = response.data[0]
+      showSuccessNotification("Хэрэглэгчдийн нэрс жагсаагдав!")
+    }) 
+    .catch(() => {
+      showErrorNotification("Хэрэглэгчдийн нэрс жагсаах хүсэлт очсонгүй!")
+    });
+    console.log(this.otherUsers)
+  },
   computed: {
-    ...mapState('user', ['loggedIn', 'details', 'isAdmin', 'usersData']),
-  }
+    ...mapState('user', ['loggedIn', 'details', 'isAdmin']),
+  },
 }
 </script>

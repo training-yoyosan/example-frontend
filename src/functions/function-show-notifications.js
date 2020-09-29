@@ -23,13 +23,16 @@ function showSuccessNotification(message) {
   });
 }
 
-function makeTableData(jsonResponse) {
-  const length = jsonResponse.length;
-  const data = new Object();
-  for (let index = 0; index < length; index++) {
-    data[index] = jsonResponse[index];
-  }
-  return data;
+function showInfoNotification(message) {
+  Loading.hide();
+
+  Notify.create({
+    color: "blue-5",
+    textColor: "white",
+    icon: "info",
+    position: "top",
+    message: message
+  });
 }
 
-export { showErrorNotification, showSuccessNotification, makeTableData };
+export { showErrorNotification, showSuccessNotification, showInfoNotification };

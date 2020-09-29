@@ -18,11 +18,5 @@ function setIsAdmin(state, value) {
   LocalStorage.set("user.isAdmin", value);
 }
 
-function setUsersData(state, payload){
-  state.usersData = payload;
-
-  LocalStorage.set("user.usersData", payload);
-}
-
-export { setLoggedIn, setDetails, setIsAdmin, setUsersData };
+export { setLoggedIn, setDetails, setIsAdmin};
 
