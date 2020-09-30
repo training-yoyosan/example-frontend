@@ -150,6 +150,28 @@ function profiledit({ commit }, payload) {
     });
 }
 
+// Delete User
+function deletion({ commit }, id, name) {
+  Loading.show();
+    
+  axios
+    .delete("/api/deletion", {
+      id: id,
+      name: name,
+    })
+    .then(response => {
+      if(response.data.message === "success"){
+        showSuccessNotification(response.data.name + " нэртэй хэрэглэгчийн бүртгэл устгагдлаа.")
+
+      }else{
+        showErrorNotification("Хэрэглэгчийн бүртгэл устгалт амжилтгүй болов!")
+      }
+    })
+    .catch(() => {
+      showErrorNotification("Хэрэглэгчийн бүртгэл устгалт зөвшөөрөгдсөнгүй!")
+    });
+}
+
 // Updata adminboard
 
 function updateUsersData({ commit }, payload) {
@@ -182,4 +204,4 @@ function getState({ commit }) {
 
 }
 
-export { login, logout, test, register, profiledit, getState, updateUsersData }
+export { login, logout, test, register, profiledit, getState, updateUsersData, deletion }

@@ -18,7 +18,7 @@
         <div>Quasar v{{ $q.version }}</div> -->
       </q-toolbar>
       <div class="q-px-lg q-pt-xl q-mb-md">
-        <div class="text-h3">IFFC</div>
+        <div class="text-h3">IFFC Тест</div>
         <div class="text-subtitle1">{{ dateToday }}</div>
       </div>
       <q-img src="train-to-mongolia.jpg" class="header-image absolute-top" />
@@ -78,7 +78,7 @@
         <q-img class="absolute-top" src="train-to-mongolia.jpg" style="height: 192px">
           <div class="absolute-bottom bg-transparent">
             <q-avatar size="56px" class="q-mb-sm">
-              <img src="avatars/sampleAvatar.jpg">
+              <img src="iffc_logo.png">
             </q-avatar>
             <div class="avatar-box text-weight-bold">{{ details.name }}</div>
             <div class="avatar-box">{{ details.email }}</div>
@@ -124,6 +124,9 @@ export default {
     
    
   },
+  created () {
+    this.$q.dark.set(true)
+  }
 }
 </script>
 

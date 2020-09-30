@@ -10,12 +10,11 @@
         selection="single"
         :selected.sync="selected"
         :rows-per-page-label="rowString"
-        @selection="rowSelecting"
       >
         <template v-slot:top>
           <q-btn :disable="selectedBtn" color="primary" label="Шинэ хэрэглэгч" @click="newDialog = true" />
-          <q-btn class="q-ml-sm" :disable="!selectedBtn" color="warning" label="Хэрэглэгч засах" @click="editDialog = true" />
-          <q-btn class="q-ml-sm" :disable="!selectedBtn" color="negative" label="Хэрэглэгч устгах" @click="deleteDialog = true" />
+          <q-btn class="q-ml-sm" :disable="selectedBtn" color="warning" label="Хэрэглэгч засах" @click="editDialog = true" />
+          <q-btn class="q-ml-sm" :disable="selectedBtn" color="negative" label="Хэрэглэгч устгах" @click="deleteDialog = true" />
           <q-space />
           <q-input dense debounce="300" color="primary" v-model="filter">
             <template v-slot:append>
@@ -24,10 +23,11 @@
           </q-input>
         </template>
 
-      <!-- <div class="q-mt-md">
-        Selected: {{ JSON.stringify(selected) }}
-      </div> -->
+      
       </q-table>
+    </div>
+    <div class="q-mt-md">
+      {{ JSON.stringify(selected[0]) }}
     </div>
 
     <q-dialog v-model="newDialog" persistent transition-show="scale" transition-hide="scale">
@@ -177,7 +177,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn label="Устгах" color="negative" @click="deleteUser" v-close-popup  />
+          <q-btn label="Устгах" color="negative" @click="deleteUser"/>
           <q-btn flat label="Буцах" color="negative" v-close-popup />
         </q-card-actions>
       </q-card>
@@ -278,7 +278,7 @@ export default {
     this.updateUsersData(this.details.id)
   },
   methods: {
-    ...mapActions('user', ['register', 'updateUsersData', 'profiledit']),
+    ...mapActions('user', ['register', 'updateUsersData', 'profiledit', 'deletion']),
     onNewSubmit () {
       this.register(this.formNewData)
       .then(
@@ -327,13 +327,30 @@ export default {
       this.FormEditData.accept = false
     },
     deleteUser () {
-      if(selected.length){
-
+      
+      try {
+        this.deletion(JSON.stringify(this.selected[0].id), JSON.stringify(this.selected[0].name))
+        .then(
+          this.deleteDialog = false,
+        )
+        this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: this.selected[0].name +' Устгалт дарагдав.'
+        })
+      } catch (error) {
+        this.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Хоосон Устгалт дарагдав. Алдаа: ' + error
+        })
       }
+      this.deleteDialog = false;
+      this.updateUsersData(this.details.id)
+      
     },
-    rowSelecting (){
-        this.selectedBtn = true
-    }
   },
   computed: {
     ...mapState('user', ['loggedIn', 'details', 'isAdmin', 'usersData']),
