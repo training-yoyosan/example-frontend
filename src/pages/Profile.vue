@@ -106,7 +106,7 @@
                 </div>
               </q-form>
             </div>
-            <q-btn v-else color="warning" label="Засах" @click="data.showEdit = true" />
+            <q-btn v-else color="warning" label="Засах" @click="showEditPanel" />
           </q-card-section>
         </div>
       </div>
@@ -141,6 +141,12 @@ export default {
   },
   methods: {
     ...mapActions('user', ['profiledit']),
+    showEditPanel () {
+      this.profileFormData.id = this.details.id
+      this.profileFormData.name = this.details.name
+      this.profileFormData.email = this.details.email
+      this.data.showEdit = true
+    },
     onSubmit () {
       if (this.profileFormData.accept !== true) {
         this.$q.notify({
@@ -151,7 +157,6 @@ export default {
         })
       }
       else {
-        this.profileFormData.id = this.details.id
         this.profiledit(this.profileFormData)
       }
     },

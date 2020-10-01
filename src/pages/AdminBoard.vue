@@ -7,14 +7,14 @@
         :columns="columns"
         row-key="name"
         :filter="filter"
-        selection="single"
-        :selected.sync="selected"
         :rows-per-page-label="rowString"
+        :no-data-label="noDataString"
+        :no-results-label="noResultString"
       >
         <template v-slot:top>
-          <q-btn :disable="selectedBtn" color="primary" label="Шинэ хэрэглэгч" @click="newDialog = true" />
-          <q-btn class="q-ml-sm" :disable="selectedBtn" color="warning" label="Хэрэглэгч засах" @click="editDialog = true" />
-          <q-btn class="q-ml-sm" :disable="selectedBtn" color="negative" label="Хэрэглэгч устгах" @click="deleteDialog = true" />
+          <q-btn color="primary" label="Шинэ хэрэглэгч" @click="newDialog = true" />
+          <!-- <q-btn class="q-ml-sm" :disable="!selectedBtn" color="warning" label="Хэрэглэгч засах" @click="editDialog = true" />
+          <q-btn class="q-ml-sm" :disable="!selectedBtn" color="negative" label="Хэрэглэгч устгах" @click="deleteDialog = true" /> -->
           <q-space />
           <q-input dense debounce="300" color="primary" v-model="filter">
             <template v-slot:append>
@@ -22,14 +22,17 @@
             </template>
           </q-input>
         </template>
-
-      
+        <template v-slot:body-cell-id="props">
+          <q-td :props="props">
+            <div>
+              <!-- <q-badge color="purple" :label="props.value"></q-badge> -->
+              <q-btn icon="create" color="warning" @click="showEdit(props.value)" dense flat/>
+              <q-btn icon="delete" color="negative" @click="showDelete(props.value)" dense flat/>
+            </div>
+          </q-td>
+        </template>
       </q-table>
     </div>
-    <div class="q-mt-md">
-      {{ JSON.stringify(selected[0]) }}
-    </div>
-
     <q-dialog v-model="newDialog" persistent transition-show="scale" transition-hide="scale">
       <q-card style="width: 600px; max-width: 80vw;">
         <q-card-section class="row items-center q-pb-none">
@@ -37,7 +40,6 @@
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
-
         <q-card-section>
           <q-form
             @submit="onNewSubmit"
@@ -96,7 +98,6 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-
     <q-dialog v-model="editDialog" persistent transition-show="scale" transition-hide="scale">
       <q-card style="width: 600px; max-width: 80vw;">
         <q-card-section class="row items-center q-pb-none">
@@ -104,27 +105,24 @@
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
-
         <q-card-section>
           <q-form
             @submit="onEditSubmit"
             @reset="onEditReset"
             class="q-gutter-md"
           >
-
             <q-input
               filled
-              v-model="FormEditData.name"
+              v-model="formEditData.name"
               label="Нэр ба овог *"
               hint="Нэр ба овог"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Нэр оруулна уу']"
             />
-
             <q-input
               filled
               type="email"
-              v-model="FormEditData.email"
+              v-model="formEditData.email"
               label="И-мейл *"
               lazy-rules
               :rules="[
@@ -132,34 +130,31 @@
                 val => val.includes('@') || 'И-мэйл биш байна'
               ]"
             />
-
             <q-input
               filled
-              :type="FormEditData.isPwd ? 'password' : 'text'"
-              v-model="FormEditData.password"
+              :type="formEditData.isPwd ? 'password' : 'text'"
+              v-model="formEditData.password"
               label="Нууц үг *"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Нууц үг оруулна уу']"
             >
               <template v-slot:append>
                 <q-icon
-                  :name="FormEditData.isPwd ? 'visibility_off' : 'visibility'"
+                  :name="formEditData.isPwd ? 'visibility_off' : 'visibility'"
                   class="cursor-pointer"
-                  @click="FormEditData.isPwd = !FormEditData.isPwd"
+                  @click="formEditData.isPwd = !formEditData.isPwd"
                 />
               </template>
             </q-input>
             <q-input
               filled
-              :type="FormEditData.isPwd ? 'password' : 'text'"
-              v-model="FormEditData.password_confirmation"
+              :type="formEditData.isPwd ? 'password' : 'text'"
+              v-model="formEditData.password_confirmation"
               label="Нууц үг баталгаажуулах *"
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Баталгаажуулах нууц үг оруулна уу']"
             />
-
-            <q-toggle v-model="FormEditData.accept" label="Мэдээлэл засахдаа итгэлтэй байна." />
-
+            <q-toggle v-model="formEditData.accept" label="Мэдээлэл засахдаа итгэлтэй байна." />
             <div>
               <q-btn label="Засах" type="submit" color="warning"/>
               <q-btn label="Цэвэрлэх" type="reset" color="warning" flat class="q-ml-sm" />
@@ -169,39 +164,51 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="deleteDialog" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <q-avatar icon="delete" color="negative" text-color="white" />
-          <span class="q-ml-sm">Хэрэглэгчийн бүртгэлийг устгах уу?</span>
+    <q-dialog v-model="deleteDialog" persistent transition-show="scale" transition-hide="scale">
+      <q-card style="width: 600px; max-width: 80vw;">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">Хэрэглэгчийн бүртгэлийг устгах уу?</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn label="Устгах" color="negative" @click="deleteUser"/>
-          <q-btn flat label="Буцах" color="negative" v-close-popup />
-        </q-card-actions>
+        <q-card-section>
+          <q-form
+            @submit="onDeleteSubmit"
+            class="q-gutter-md"
+          >
+            <q-input
+              hidden
+              disable
+              v-model="formDeleteData.id"
+            />
+            <q-toggle v-model="formDeleteData.accept" label="Мэдээлэл устгахдаа итгэлтэй байна." />
+            <div>
+              <q-btn label="Устгах" type="submit" color="negative"/> 
+              <q-btn label="Хаах" color="negative" flat class="q-ml-sm" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
       </q-card>
     </q-dialog>
-
   </q-page>
 </template>
 
 <script>
 import { date } from 'quasar'
 import { mapState, mapActions } from 'vuex'
-
 export default {
   name: 'AdminBoard',
   data() {
     return {
       rowString: 'Нэг хуудсанд харуулж буй хэрэглэгчийн тоо',
-      // selectedString: 'Нэг хэрэглэгч сонгогдсон байна.',
-      selected: [],
+      noDataString: 'Хэрэглэгч олдсонгүй',
+      noResultString: 'Хайлтанд тохирох хэрэглэгч олдсонгүй',
       filter: '',
       newDialog: false,
       editDialog: false,
       deleteDialog: false,
-      selectedBtn: false,
+      selectedId: null,
+      selectedName: null,
       formNewData: {
         name: null,
         email: null,
@@ -210,13 +217,17 @@ export default {
         isPwd: true,
         is_admin: false
       },
-      FormEditData: {
+      formEditData: {
         id: null,
         name: null,
         email: null,
         password: null,
         password_confirmation: null,
         isPwd: true,
+        accept: false
+      },
+      formDeleteData: {
+        id: null,
         accept: false
       },
       columns: [
@@ -227,7 +238,8 @@ export default {
           align: 'left',
           field: row => row.name,
           format: val => `${val}`,
-          sortable: true
+          sortable: true,
+          headerStyle: 'font-weight: bold;'
         },
         {
           name: 'email',
@@ -235,55 +247,47 @@ export default {
           label: 'Хэрэглэгчийн И-мейл',
           align: 'left',
           field: row => row.email,
-          sortable: true
+          sortable: true,
+          headerStyle: 'font-weight: bold;'
         },
         {
           name: 'is_admin',
           label: 'Хэрэглэгч Админ эсэх',
           align: 'center',
           field: row => row.is_admin ? 'Тийм' : 'Үгүй',
-          sortable: true
+          sortable: true,
+          headerStyle: 'font-weight: bold;'
         },
         {
           name: 'created_at',
           label: 'Бүртгэгдсэн огноо',
           align: 'center',
           field: row => date.formatDate(row.created_at, "DD/MM/YYYY"),
-          sortable: true
+          sortable: true,
+          headerStyle: 'font-weight: bold;'
         },
-        // {
-        //   name: 'id',
-        //   label: 'Buttons',
-        //   align: 'center',
-        //   field: row => row.id,
-        //   format: val => `${val}`,
-        //   sortable: true,
-        //   hidden
-        // }
+        {
+          name: 'id',
+          label: 'Үйлдлүүд',
+          align: 'right',
+          field: row => row.id,
+          sortable: true,
+          headerStyle: 'font-weight: bold;'
+        },
       ],
     }
   },
   mounted() {
-    // this.$axios.post("/api/getusers", {
-    //   id: this.details.id
-    // })
-    // .then(response => {
-    //   this.otherUsers = response.data[0]
-    //   showSuccessNotification("Хэрэглэгчдийн нэрс жагсаагдав!")
-    // }) 
-    // .catch(() => {
-    //   showErrorNotification("Хэрэглэгчдийн нэрс жагсаах хүсэлт очсонгүй!")
-    // });
-    // console.log(this.otherUsers)
     this.updateUsersData(this.details.id)
   },
   methods: {
-    ...mapActions('user', ['register', 'updateUsersData', 'profiledit', 'deletion']),
+    ...mapActions('user', ['register', 'updateUsersData', 'deletion' , 'useredition', 'test']),
     onNewSubmit () {
       this.register(this.formNewData)
       .then(
         this.newDialog = false,
-        this.updateUsersData(this.details.id)
+        this.updateUsersData(this.details.id),
+        this.onNewReset()
       )
     },
     onNewReset () {
@@ -293,8 +297,12 @@ export default {
       this.formNewData.password_confirmation = null
       this.formNewData.is_admin = false
     },
+    showEdit (id) {
+      this.formEditData.id = parseInt(id, 10)
+      this.editDialog = true
+    },
     onEditSubmit () {
-      if (this.FormEditData.accept !== true) {
+      if (this.formEditData.accept !== true) {
         this.$q.notify({
           color: 'red-5',
           textColor: 'white',
@@ -303,53 +311,46 @@ export default {
         })
       }
       else {
-        this.FormEditData.id = this.selected.id
-        this.profiledit(this.FormEditData)
+        this.useredition(this.formEditData)
         .then(
           this.editDialog = false,
-          this.updateUsersData(this.details.id)
+          this.updateUsersData(this.details.id),
+          this.onEditReset()
         )
-        this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Засалт хийгдэв.'
-        })
       }
     },
     onEditReset () {
-      this.FormEditData.id = ''
-      this.FormEditData.name = ''
-      this.FormEditData.email = ''
-      this.FormEditData.password = ''
-      this.FormEditData.password_confirmation = ''
-      this.FormEditData.isPwd = true
-      this.FormEditData.accept = false
+      this.formEditData.id = ''
+      this.formEditData.name = ''
+      this.formEditData.email = ''
+      this.formEditData.password = ''
+      this.formEditData.password_confirmation = ''
+      this.formEditData.isPwd = true
+      this.formEditData.accept = false
     },
-    deleteUser () {
-      
-      try {
-        this.deletion(JSON.stringify(this.selected[0].id), JSON.stringify(this.selected[0].name))
-        .then(
-          this.deleteDialog = false,
-        )
+    showDelete (id) {
+      this.formDeleteData.id = parseInt(id, 10)
+      this.deleteDialog = true
+    },
+    onDeleteSubmit () {
+      if (this.formDeleteData.accept !== true) {
         this.$q.notify({
-          color: 'green-4',
+          color: 'red-5',
           textColor: 'white',
-          icon: 'cloud_done',
-          message: this.selected[0].name +' Устгалт дарагдав.'
-        })
-      } catch (error) {
-        this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Хоосон Устгалт дарагдав. Алдаа: ' + error
+          icon: 'warning',
+          message: 'Мэдээлэл устгах зөвшөөрөл олгоно уу'
         })
       }
-      this.deleteDialog = false;
-      this.updateUsersData(this.details.id)
-      
+      else {
+        this.deletion(this.formDeleteData)
+        .then(
+          this.deleteDialog = false,
+          this.updateUsersData(this.details.id),
+          this.formDeleteData.id = '',
+          this.formDeleteData.accept = false
+        )
+      }
+
     },
   },
   computed: {

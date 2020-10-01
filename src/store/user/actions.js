@@ -74,13 +74,16 @@ function logout({ commit }) {
 
 //Server API Test
 
-function test({ commit }) {
+function test({ commit }, payload) {
   Loading.show();
 
   axios
-    .post("/api/test")
+    .put("/api/test", {
+      id: payload.id,
+      name: payload.name
+    })
     .then(response => {
-      showSuccessNotification(response.data.message)
+      showSuccessNotification(response.data.message + ' and ' + response.data.id)
     })
     .catch(() => {
       showErrorNotification("Тест үйлдэл зөвшөөрөгдсөнгүй")
@@ -150,22 +153,49 @@ function profiledit({ commit }, payload) {
     });
 }
 
+// User edit
+
+function useredition({ commit }, payload){
+  Loading.show();
+    
+  axios
+    .put("/api/profiledit", {
+      id: payload.id,
+      name: payload.name,
+      email: payload.email,
+      password: payload.password,
+      password_confirmation: payload.password_confirmation,
+    })
+    .then(response => {
+      if(response.data.message === "success"){
+        showSuccessNotification(response.data.name + " нэртэй хэрэглэгчийн мэдээлэл засагдлаа.")
+        
+      } else {
+        showErrorNotification("Хэрэглэгчийн засалт амжилтгүй болов!")
+      }
+      this.$router.push("/adminboard")
+    })
+    .catch(() => {
+      showErrorNotification("Хэрэглэгчийн засалт зөвшөөрөгдсөнгүй!")
+    });
+}
+
 // Delete User
-function deletion({ commit }, id, name) {
+function deletion({ commit }, payload) {
   Loading.show();
     
   axios
     .delete("/api/deletion", {
-      id: id,
-      name: name,
+      id: payload.id
     })
     .then(response => {
       if(response.data.message === "success"){
-        showSuccessNotification(response.data.name + " нэртэй хэрэглэгчийн бүртгэл устгагдлаа.")
+        showSuccessNotification(response.data.id + " кодтой хэрэглэгчийн бүртгэл устгагдлаа.")
 
-      }else{
+      } else {
         showErrorNotification("Хэрэглэгчийн бүртгэл устгалт амжилтгүй болов!")
       }
+      this.$router.push("/adminboard")
     })
     .catch(() => {
       showErrorNotification("Хэрэглэгчийн бүртгэл устгалт зөвшөөрөгдсөнгүй!")
@@ -204,4 +234,4 @@ function getState({ commit }) {
 
 }
 
-export { login, logout, test, register, profiledit, getState, updateUsersData, deletion }
+export { login, logout, test, register, profiledit, getState, updateUsersData, deletion, useredition }
