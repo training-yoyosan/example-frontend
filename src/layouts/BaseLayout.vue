@@ -1,28 +1,18 @@
 <template>
-  <q-layout view="hHh Lpr fFf"> <!-- Be sure to play with the Layout demo on docs -->
+  <q-layout view="hHh Lpr fFf">
+    <!-- Be sure to play with the Layout demo on docs -->
 
     <!-- (Optional) The Header -->
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          round
-          dense
-          icon="menu"
-          @click="leftDrawer = !leftDrawer"
-        />
+        <q-btn flat round dense icon="menu" @click="leftDrawer = !leftDrawer" />
         <q-toolbar-title>
           Header
         </q-toolbar-title>
       </q-toolbar>
 
       <q-tabs>
-        <q-route-tab
-          icon="map"
-          to="/your/route"
-          replace
-          label="One Tab"
-        />
+        <q-route-tab icon="map" to="/your/route" replace label="One Tab" />
         <q-route-tab
           icon="assignment"
           to="/some/other/route"
@@ -35,12 +25,7 @@
     <!-- (Optional) The Footer -->
     <q-footer>
       <q-tabs switch-indicator>
-        <q-route-tab
-          icon="map"
-          to="/your/route"
-          replace
-          label="One Tab"
-        />
+        <q-route-tab icon="map" to="/your/route" replace label="One Tab" />
         <q-route-tab
           icon="assignment"
           to="/some/other/route"
@@ -50,13 +35,7 @@
       </q-tabs>
 
       <q-toolbar>
-        <q-btn
-          flat
-          round
-          dense
-          icon="menu"
-          @click="leftDrawer = !leftDrawer"
-        />
+        <q-btn flat round dense icon="menu" @click="leftDrawer = !leftDrawer" />
         <q-toolbar-title>
           Footer
         </q-toolbar-title>
@@ -80,7 +59,6 @@
       <!-- This is where pages get injected -->
       <router-view />
     </q-page-container>
-
   </q-layout>
 </template>
 
@@ -88,10 +66,10 @@
 export default {
   // name: 'LayoutName',
 
-  data () {
+  data() {
     return {
       leftDrawer: true
-    }
+    };
   }
-}
+};
 </script>

@@ -4,16 +4,16 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions('user', ['getState'])
+    ...mapActions("user", ["getState"])
   },
-  mounted () {
+  mounted() {
     // get user state
-    this.getState()
+    this.getState();
   }
-}
+};
 // window.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 </script>

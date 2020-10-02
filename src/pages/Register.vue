@@ -2,18 +2,14 @@
   <q-page padding class="row justify-center">
     <q-card class="window self-center q-mb-xl">
       <q-card-section>
-        <q-form
-          @submit="onSubmit"
-          @reset="onReset"
-          class="q-gutter-md"
-        >
+        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-input
             filled
             v-model="formData.name"
             label="Нэр *"
             hint="Нэр ба овог"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Нэр оруулна уу']"
+            :rules="[val => (val && val.length > 0) || 'Нэр оруулна уу']"
           />
           <q-input
             filled
@@ -22,7 +18,7 @@
             label="И-мейл *"
             lazy-rules
             :rules="[
-              val => val && val.length > 0 || 'И-мейл оруулна уу',
+              val => (val && val.length > 0) || 'И-мейл оруулна уу',
               val => val.includes('@') || 'И-мэйл биш байна'
             ]"
           />
@@ -32,7 +28,7 @@
             v-model="formData.password"
             label="Нууц үг *"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Нууц үг оруулна уу']"
+            :rules="[val => (val && val.length > 0) || 'Нууц үг оруулна уу']"
           >
             <template v-slot:append>
               <q-icon
@@ -48,13 +44,28 @@
             v-model="formData.password_confirmation"
             label="Нууц үг баталгаажуулах *"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Баталгаажуулах нууц үг оруулна уу']"
+            :rules="[
+              val =>
+                (val && val.length > 0) || 'Баталгаажуулах нууц үг оруулна уу'
+            ]"
           />
           <q-toggle v-model="formData.is_admin" label="Админ эрхтэй эсэх" />
           <div>
-            <q-btn label="Бүртгүүлэх" type="submit" color="primary"/>
-            <q-btn label="Цэвэрлэх" type="reset" color="primary" flat class="q-ml-sm" />
-            <q-btn label="Нэвтрэх" to="/login" color="primary" flat class="q-ml-sm" />
+            <q-btn label="Бүртгүүлэх" type="submit" color="primary" />
+            <q-btn
+              label="Цэвэрлэх"
+              type="reset"
+              color="primary"
+              flat
+              class="q-ml-sm"
+            />
+            <q-btn
+              label="Нэвтрэх"
+              to="/login"
+              color="primary"
+              flat
+              class="q-ml-sm"
+            />
           </div>
         </q-form>
       </q-card-section>
@@ -63,11 +74,11 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 
 export default {
-  name: 'Register',
-  data () {
+  name: "Register",
+  data() {
     return {
       formData: {
         name: null,
@@ -77,27 +88,27 @@ export default {
         isPwd: true,
         is_admin: false
       }
-    }
+    };
   },
 
   methods: {
-    ...mapActions('user', ['register']),
-    onSubmit () {
-      this.register(this.formData)
+    ...mapActions("user", ["register"]),
+    onSubmit() {
+      this.register(this.formData);
     },
-    onReset () {
-      this.formData.name = null
-      this.formData.email = null
-      this.formData.password = null
-      this.formData.password_confirmation = null
-      this.formData.is_admin = false
+    onReset() {
+      this.formData.name = null;
+      this.formData.email = null;
+      this.formData.password = null;
+      this.formData.password_confirmation = null;
+      this.formData.is_admin = false;
     }
   }
-}
+};
 </script>
 
 <style lang="sass" scoped>
-  .window
-    width: 100%
-    max-width: 400px
+.window
+  width: 100%
+  max-width: 400px
 </style>

@@ -24,68 +24,73 @@
       <q-img src="train-to-mongolia.jpg" class="header-image absolute-top" />
     </q-header>
 
-      <q-drawer
-        v-if="loggedIn"
-        v-model="left"
-        show-if-above
-        :width="250"
-        :breakpoint="600"
+    <q-drawer
+      v-if="loggedIn"
+      v-model="left"
+      show-if-above
+      :width="250"
+      :breakpoint="600"
+    >
+      <q-scroll-area
+        style="height: calc(100% - 192px); margin-top: 192px; border-right: 1px solid #ddd"
       >
-        <q-scroll-area style="height: calc(100% - 192px); margin-top: 192px; border-right: 1px solid #ddd">
-          <q-list padding>
-            <q-item to="/profile" exact clickable v-ripple>
-              <q-item-section avatar>
-                <q-icon name="person" />
-              </q-item-section>
+        <q-list padding>
+          <q-item to="/profile" exact clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="person" />
+            </q-item-section>
 
-              <q-item-section>
-                Профил
-              </q-item-section>
-            </q-item>
+            <q-item-section>
+              Профил
+            </q-item-section>
+          </q-item>
 
-            <q-item v-if="isAdmin" to="/adminboard" exact clickable v-ripple >
-              <q-item-section avatar>
-                <q-icon name="people" />
-              </q-item-section>
+          <q-item v-if="isAdmin" to="/adminboard" exact clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="people" />
+            </q-item-section>
 
-              <q-item-section>
-                Админы самбар
-              </q-item-section>
-            </q-item>
+            <q-item-section>
+              Админы самбар
+            </q-item-section>
+          </q-item>
 
-            <q-item clickable @click="test" v-ripple>
-              <q-item-section avatar>
-                <q-icon name="send" />
-              </q-item-section>
+          <q-item clickable @click="test" v-ripple>
+            <q-item-section avatar>
+              <q-icon name="send" />
+            </q-item-section>
 
-              <q-item-section>
-                Тест үйлдэл
-              </q-item-section>
-            </q-item>
+            <q-item-section>
+              Тест үйлдэл
+            </q-item-section>
+          </q-item>
 
-            <q-item clickable @click="logout" v-ripple>
-              <q-item-section avatar>
-                <q-icon name="exit_to_app" />
-              </q-item-section>
+          <q-item clickable @click="logout" v-ripple>
+            <q-item-section avatar>
+              <q-icon name="exit_to_app" />
+            </q-item-section>
 
-              <q-item-section>
-                Гарах
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-scroll-area>
+            <q-item-section>
+              Гарах
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
 
-        <q-img class="absolute-top" src="train-to-mongolia.jpg" style="height: 192px">
-          <div class="absolute-bottom bg-transparent">
-            <q-avatar size="56px" class="q-mb-sm">
-              <img src="iffc_logo.png">
-            </q-avatar>
-            <div class="avatar-box text-weight-bold">{{ details.name }}</div>
-            <div class="avatar-box">{{ details.email }}</div>
-          </div>
-        </q-img>
-
-      </q-drawer>
+      <q-img
+        class="absolute-top"
+        src="train-to-mongolia.jpg"
+        style="height: 192px"
+      >
+        <div class="absolute-bottom bg-transparent">
+          <q-avatar size="56px" class="q-mb-sm">
+            <img src="iffc_logo.png" />
+          </q-avatar>
+          <div class="avatar-box text-weight-bold">{{ details.name }}</div>
+          <div class="avatar-box">{{ details.email }}</div>
+        </div>
+      </q-img>
+    </q-drawer>
 
     <q-page-container>
       <keep-alive>
@@ -96,45 +101,43 @@
 </template>
 
 <script>
-import { date } from 'quasar'
-import { mapState, mapActions } from 'vuex'
+import { date } from "quasar";
+import { mapState, mapActions } from "vuex";
 
 const stringOptions = [
-  'quasarframework/quasar',
-  'quasarframework/quasar-awesome'
-]
+  "quasarframework/quasar",
+  "quasarframework/quasar-awesome"
+];
 export default {
-  name: 'MainLayout',
-  data () {
+  name: "MainLayout",
+  data() {
     return {
       left: false,
       profile: false
-    }
+    };
   },
 
   computed: {
-    ...mapState('user', ['loggedIn', 'details', 'isAdmin']),
-    dateToday () {
-      return date.formatDate(Date.now(), 'dddd D MMMM')
+    ...mapState("user", ["loggedIn", "details", "isAdmin"]),
+    dateToday() {
+      return date.formatDate(Date.now(), "dddd D MMMM");
     }
   },
 
   methods: {
-    ...mapActions('user', ['logout', 'test']),
-    
-   
+    ...mapActions("user", ["logout", "test"])
   },
-  created () {
-    this.$q.dark.set(false)
+  created() {
+    this.$q.dark.set(false);
   }
-}
+};
 </script>
 
-<style lang="scss" >
-  .header-image {
-    height: 100%;
-    z-index: -1;
-    opacity: 0.5;
-    filter: grayscale(100%);
-  }
+<style lang="scss">
+.header-image {
+  height: 100%;
+  z-index: -1;
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
 </style>

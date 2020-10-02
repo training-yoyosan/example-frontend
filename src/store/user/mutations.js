@@ -24,5 +24,4 @@ function setIsAdmin(state, value) {
   LocalStorage.set("user.isAdmin", value);
 }
 
-export { setLoggedIn, setDetails, setIsAdmin, setUsersData};
-
+export { setLoggedIn, setDetails, setIsAdmin, setUsersData };

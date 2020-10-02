@@ -23,7 +23,7 @@ function showSuccessNotification(message) {
   });
 }
 
-function showInfoNotification(message) {
+function showInfoNotification(infoMessage) {
   Loading.hide();
 
   Notify.create({
@@ -31,7 +31,7 @@ function showInfoNotification(message) {
     textColor: "white",
     icon: "info",
     position: "top",
-    message: message
+    message: infoMessage
   });
 }
 
