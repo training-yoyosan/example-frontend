@@ -11,11 +11,11 @@
           @click="left = !left"
         />
 
-        <!-- <q-toolbar-title>
-          Quasar App
+        <q-toolbar-title>
+          Quasar Front-End App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div> -->
+        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
       <div class="q-px-lg q-pt-xl q-mb-md">
         <div class="text-h3">IFFC Тест</div>
@@ -128,7 +128,7 @@ export default {
     ...mapActions("user", ["logout", "test"])
   },
   created() {
-    this.$q.dark.set(false);
+    this.$q.dark.set(true);
   }
 };
 </script>
