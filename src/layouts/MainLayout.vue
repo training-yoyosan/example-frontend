@@ -104,10 +104,6 @@
 import { date } from "quasar";
 import { mapState, mapActions } from "vuex";
 
-const stringOptions = [
-  "quasarframework/quasar",
-  "quasarframework/quasar-awesome"
-];
 export default {
   name: "MainLayout",
   data() {

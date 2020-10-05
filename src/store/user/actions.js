@@ -190,7 +190,9 @@ function deletion({ commit }, payload) {
 
   axios
     .delete("/api/deletion", {
-      id: payload.id
+      data: {
+        id: payload.id
+      }
     })
     .then(response => {
       if (response.data.message === "success") {

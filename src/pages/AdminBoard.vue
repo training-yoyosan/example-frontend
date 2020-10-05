@@ -324,7 +324,7 @@ export default {
           label: "Үйлдлүүд",
           align: "right",
           field: row => row.id,
-          sortable: true,
+          sortable: false,
           headerStyle: "font-weight: bold;"
         }
       ]
