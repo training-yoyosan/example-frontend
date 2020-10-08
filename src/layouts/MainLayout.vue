@@ -55,6 +55,16 @@
             </q-item-section>
           </q-item>
 
+          <q-item v-if="isAdmin" to="/contract" exact clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="article" />
+            </q-item-section>
+
+            <q-item-section>
+              Гэрээний самбар
+            </q-item-section>
+          </q-item>
+
           <q-item clickable @click="test" v-ripple>
             <q-item-section avatar>
               <q-icon name="send" />
