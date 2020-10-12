@@ -65,7 +65,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable @click="test" v-ripple>
+          <q-item clickable @click="test(details)" v-ripple>
             <q-item-section avatar>
               <q-icon name="send" />
             </q-item-section>

@@ -77,13 +77,13 @@ function test({ commit }, payload) {
 
   axios
     .put("/api/test", {
-      id: payload.id,
-      name: payload.name
+      id: payload.id
     })
     .then(response => {
       showSuccessNotification(
-        response.data.message + " and " + response.data.id
+        response.data.message + " Хэрэглэгчийн нэр: " + response.data.result[0].name
       );
+      console.log(response.data)
     })
     .catch(() => {
       showErrorNotification("Тест үйлдэл зөвшөөрөгдсөнгүй");

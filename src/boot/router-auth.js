@@ -7,8 +7,11 @@ export default ({ router }) => {
 
     if (!loggedIn && !guestRoutes.includes(to.path)) {
       next("/login");
+    } else if (loggedIn && guestRoutes.includes(to.path)) {
+      next("/");
     } else {
       next();
     }
   });
+
 };
