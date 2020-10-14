@@ -233,11 +233,13 @@ function getState({ commit }) {
   const details = LocalStorage.getItem("user.details") || {};
   const usersData = LocalStorage.getItem("user.usersData") || {};
   const isAdmin = LocalStorage.getItem("user.isAdmin") || false;
+  // const profilePic = LocalStorage.getItem("user.profilePic") || {};
 
   commit("setLoggedIn", loggedIn);
   commit("setDetails", details);
   commit("setUsersData", usersData);
   commit("setIsAdmin", isAdmin);
+  // commit("setProfilePic", profilePic);
 }
 
 export {
