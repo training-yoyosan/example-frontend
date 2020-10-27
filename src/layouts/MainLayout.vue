@@ -75,6 +75,16 @@
             </q-item-section>
           </q-item>
 
+          <q-item clickable @click="test2(details)" v-ripple>
+            <q-item-section avatar>
+              <q-icon name="send" />
+            </q-item-section>
+
+            <q-item-section>
+              Тест 2 үйлдэл
+            </q-item-section>
+          </q-item>
+
           <q-item clickable @click="logout" v-ripple>
             <q-item-section avatar>
               <q-icon name="exit_to_app" />
@@ -131,7 +141,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("user", ["logout", "test"])
+    ...mapActions("user", ["logout", "test", "test2"])
   },
   created() {
     this.$q.dark.set(true);

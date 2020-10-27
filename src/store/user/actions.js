@@ -90,6 +90,26 @@ function test({ commit }, payload) {
     });
 }
 
+//Server API Test
+
+function test2({ commit }, payload) {
+  Loading.show();
+
+  axios
+    .put("/api/test2", {
+      id: payload.id
+    })
+    .then(response => {
+      showSuccessNotification(
+        response.data.message + " Хэрэглэгчийн нэр: " + response.data.result[0].name
+      );
+      console.log(response.data)
+    })
+    .catch(() => {
+      showErrorNotification("Тест 2 үйлдэл зөвшөөрөгдсөнгүй");
+    });
+}
+
 //Register
 
 function register({ commit }, payload) {
@@ -246,6 +266,7 @@ export {
   login,
   logout,
   test,
+  test2,
   register,
   profiledit,
   getState,
