@@ -22,10 +22,11 @@
   "devDependencies": {
     "@quasar/app": "^2.1.6",
     "@quasar/quasar-app-extension-qenv": "^1.0.3",
+    "@quasar/quasar-app-extension-qpdfviewer": "^1.0.0-beta.8",
     "babel-eslint": "^10.0.1",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.14.0",
+    "eslint-config-prettier": "^6.15.0",
     "eslint-loader": "^3.0.3",
     "eslint-plugin-vue": "^6.1.2"
   },
