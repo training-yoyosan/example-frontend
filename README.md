@@ -19,7 +19,7 @@ yarn
 ### Start the app in development mode
 
 ```bash
-quasar dev
+yarn run dev
 ```
 
 **Notes**
