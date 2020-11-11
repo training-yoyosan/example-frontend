@@ -1,3 +1,5 @@
+![Quasar + Laravel = Love](https://prnt.sc/vhb78n)
+
 # Example Frontend (example-frontend)
 
 Example SPA frontend to be used with a Laravel 8 project.
