@@ -3,5 +3,5 @@
 git pull
 yarn
 yarn run build
-chown -R mpalade:mpalade .
-chmod -R u+rwX,go+rX,go-w .
+sudo chown -R worker:www-data .
+sudo chmod -R u+rwX,go+rX,go-w .
