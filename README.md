@@ -63,6 +63,7 @@ Now access the application at http://localhost:8080.
 yarn
 
 # setup env
+cp .quasar.env.sample.json .quasar.env.json
 vim .quasar.env.json
 ## Adjust API_BASE_URL
 ```
