@@ -10,6 +10,11 @@ This project uses:
 - Vuex state to handle the user authentication
 - For the local environment, it uses the webpack's proxy feature to proxy API calls(see [here](https://github.com/training-yoyosan/example-frontend/blob/master/quasar.conf.js#L77)).
 
+## About releases
+
+* The last Quasar v1 release can be downloaded [here](https://github.com/training-yoyosan/example-frontend/releases/tag/1.0.9).
+* The upgrade guide for existing installations can be found [here](https://github.com/training-yoyosan/example-frontend#upgrade-guide-to-v2).
+
 ## Demo
 
 Check out the live demo at http://frex.mpalade.ro
@@ -106,3 +111,4 @@ Find out more in the [official upgrade guide](https://quasar.dev/start/upgrade-g
 
 - https://quasar.dev/introduction-to-quasar
 - Quasar Discord #laravel channel
+- For support, contact me at [contact@mpalade.ro](mailto:contact@mpalade.ro).
