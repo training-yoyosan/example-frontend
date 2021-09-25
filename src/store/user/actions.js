@@ -2,7 +2,7 @@ import { Loading, LocalStorage } from "quasar";
 import {
   showErrorNotification,
   showSuccessNotification
-} from "../../functions/function-show-notifications";
+} from "src/functions/function-show-notifications";
 import axios from "axios";
 
 function login({ commit }, payload) {
