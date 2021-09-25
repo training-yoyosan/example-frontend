@@ -45,7 +45,7 @@ yarn
 ### Start the app in development mode
 
 ```bash
-yarn run dev
+quasar dev
 ```
 
 **Notes**
@@ -76,7 +76,7 @@ vim .env
 ### Build
 
 ```bash
-yarn run build
+quasar build
 
 # Adjust your server configuration according to
 # https://next.router.vuejs.org/guide/essentials/history-mode.html#example-server-configurations
@@ -102,7 +102,7 @@ rm .quasar.env.json
 
 yarn
 
-yarn run build
+quasar build
 ```
 
 Find out more in the [official upgrade guide](https://quasar.dev/start/upgrade-guide).
