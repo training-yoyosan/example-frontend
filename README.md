@@ -6,9 +6,9 @@ Example Quasar(Vue) SPA skeleton frontend to be used with a Laravel 8 project.
 
 This project uses:
 
-- Quasar [QEnv extension](https://github.com/quasarframework/app-extension-qenv/tree/dev/app-extension) to customize API URI depending on your environment.
+- ~~Quasar [QEnv extension](https://github.com/quasarframework/app-extension-qenv/tree/dev/app-extension) to customize API URI depending on your environment.~~ Removed in v2
 - Vuex state to handle the user authentication
-- For the local environment, it uses the webpack's proxy feature to proxy API calls(see [here](https://github.com/training-yoyosan/example-frontend/blob/master/quasar.conf.js#L72)).
+- For the local environment, it uses the webpack's proxy feature to proxy API calls(see [here](https://github.com/training-yoyosan/example-frontend/blob/master/quasar.conf.js#L77)).
 
 ## Demo
 
@@ -63,8 +63,8 @@ Now access the application at http://localhost:8080.
 yarn
 
 # setup env
-cp .quasar.env.sample.json .quasar.env.json
-vim .quasar.env.json
+cp .env.sample .env
+vim .env
 ## Adjust API_BASE_URL
 ```
 
@@ -72,11 +72,9 @@ vim .quasar.env.json
 
 ```bash
 yarn run build
-# or
-QENV=production quasar build
 
 # Adjust your server configuration according to
-# https://router.vuejs.org/guide/essentials/history-mode.html#example-server-configurations
+# https://next.router.vuejs.org/guide/essentials/history-mode.html#example-server-configurations
 
 # For Apache(optional)
 cp .htaccess dist/spa
@@ -84,10 +82,27 @@ cp .htaccess dist/spa
 
 Deploy on your server.
 
-**Note**: If you use HTTPS, use the protocol in your `.quasar.env.json` file.
+**Note**: If you use HTTPS, use the protocol in your `.env` file.
+
+## Upgrade guide to v2
+
+```bash
+git pull
+# remove packages related folders and files
+rm -rf node_modules/ .quasar/ yarn.lock
+# copy and update the .env file
+cp .env.sample .env
+# remove the old quasar env file
+rm .quasar.env.json
+
+yarn
+
+yarn run build
+```
+
+Find out more in the [official upgrade guide](https://quasar.dev/start/upgrade-guide).
 
 ## Resources
 
 - https://quasar.dev/introduction-to-quasar
-- https://github.com/quasarframework/app-extension-qenv/tree/dev/app-extension
 - Quasar Discord #laravel channel
