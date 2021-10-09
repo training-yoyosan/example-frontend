@@ -2,7 +2,7 @@
 
 # Example Frontend (example-frontend)
 
-Example Quasar(Vue) SPA skeleton frontend to be used with a Laravel 8 project.
+Example Quasar v2(Vue) SPA skeleton frontend to be used with a Laravel 8 project.
 
 This project uses:
 
