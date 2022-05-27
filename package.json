@@ -10,16 +10,18 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.12.2",
+    "@quasar/extras": "^1.14.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "quasar": "2.4.4",
+    "quasar": "2.7.1",
+    "vue": "^3.0.0",
     "vue-i18n": "^9.1.7",
+    "vue-router": "^4.0.0",
     "vuex": "4"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.0.0",
-    "@quasar/app": "3.2.6",
+    "@quasar/app": "3.3.3",
     "cross-env": "^7.0.2",
     "dotenv": "^10.0.0",
     "eslint": "^7.14.0",
