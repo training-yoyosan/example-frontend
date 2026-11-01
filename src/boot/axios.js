@@ -12,6 +12,8 @@ const api = axios.create({ baseURL: process.env.API_BASE_URL })
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
   axios.defaults.withCredentials = true;
+  axios.defaults.withXSRFToken = true;
+  axios.defaults.headers.common["Accept"] = "application/json";
   axios.defaults.baseURL = process.env.API_BASE_URL;
 
   app.config.globalProperties.$axios = axios

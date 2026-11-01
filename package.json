@@ -1,7 +1,7 @@
 {
   "name": "example-frontend",
   "version": "0.0.1",
-  "description": "Example SPA frontend to be used with a Laravel 7+ project.",
+  "description": "Example SPA frontend to be used with a Laravel 13 project.",
   "productName": "Example Frontend",
   "author": "Yoyo San <veselu@gmail.com>",
   "private": true,
@@ -12,45 +12,44 @@
     "build": "quasar build"
   },
   "dependencies": {
-    "@quasar/extras": "^1.15.3",
-    "axios": "^0.21.1",
-    "core-js": "^3.6.5",
-    "quasar": "2.7.7",
-    "vue": "^3.0.0",
-    "vue-i18n": "^9.1.7",
-    "vue-router": "^4.0.0",
-    "vuex": "4"
+    "@quasar/extras": "^1.16.0",
+    "axios": "^1.21.0",
+    "core-js": "^3.51.0",
+    "quasar": "^2.35.2",
+    "vue": "^3.5.44",
+    "vue-i18n": "^11.4.17",
+    "vue-router": "^5.4.0",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.0.0",
-    "@quasar/app-webpack": "^3.5.9",
-    "cross-env": "^7.0.2",
-    "dotenv": "^10.0.0",
-    "eslint": "^7.14.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "@babel/core": "^7.29.7",
+    "@babel/eslint-parser": "^7.29.9",
+    "@quasar/app-webpack": "^4.4.5",
+    "autoprefixer": "^10.6.2",
+    "cross-env": "^10.1.0",
+    "dotenv": "^18.0.9",
+    "eslint": "^9.39.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-n": "^17.0.0",
+    "eslint-plugin-promise": "^7.0.0",
     "eslint-plugin-quasar": "^1.1.0",
-    "eslint-plugin-vue": "^7.0.0",
-    "eslint-webpack-plugin": "^2.4.0"
+    "eslint-plugin-vue": "^10.0.0",
+    "eslint-webpack-plugin": "^6.0.0"
   },
   "browserslist": [
-    "ie >= 11",
-    "last 10 Chrome versions",
-    "last 10 Firefox versions",
-    "last 4 Edge versions",
-    "last 7 Safari versions",
-    "last 8 Android versions",
-    "last 8 ChromeAndroid versions",
-    "last 8 FirefoxAndroid versions",
-    "last 10 iOS versions",
-    "last 5 Opera versions"
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Edge versions",
+    "last 2 Safari versions",
+    "last 2 Android versions",
+    "last 2 ChromeAndroid versions",
+    "last 2 FirefoxAndroid versions",
+    "last 2 iOS versions",
+    "not dead"
   ],
   "engines": {
-    "node": ">= 10.18.1",
-    "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
+    "node": ">= 20",
+    "npm": ">= 9"
   }
 }
